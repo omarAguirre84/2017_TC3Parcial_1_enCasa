@@ -7,18 +7,15 @@ public class InstitutoMedico {
 
 	private int horaInicio;
 	private int horaFin;
-
 	private AgendaHoraria agendaDeHoy;
-
 	private Scanner input;
 	private Menu menu;
 
 	public InstitutoMedico(int horaInicio, int horaFin) {
-		String[] opciones = { "Turnos de Especialidad", "Turnos Asignados por Horario", "Reservar Turno",
-				"Mostrar Reportes", "Salir" };
-		// completar
+		String[] opciones = { "Turnos de Especialidad", "Turnos Asignados por Horario", "Reservar Turno","Mostrar Reportes", "Salir" };
 		this.input = new Scanner(System.in);
 		this.menu = new Menu("Instituto PEPE, su salud en las mejores manos", opciones, input);
+		//Loader.load(); 
 	}
 
 	public void iniciarActividadDiaria() {
@@ -29,21 +26,26 @@ public class InstitutoMedico {
 				try {
 					mostrarTurnosPorEspecialidad();
 				} catch (IllegalArgumentException e) {
-					System.err.println("Ingrese datos validos");
+					System.err.println("Ingrese datos validos" + "\n");
 					opcion = menu.pedirOpcion();
 				} catch (NullPointerException e) {
-					System.err.println("No hay turnos cargados");
+					System.err.println("No hay turnos cargados" + "\n");
 					opcion = menu.pedirOpcion();
 				}
 				break;
 			case 2:
-				mostrarTurnosAsignadosPorHora();
+				try {
+					mostrarTurnosAsignadosPorHora();
+				} catch (NullPointerException e) {
+					System.err.println("No hay turnos cargados. " + "\n");
+					opcion = menu.pedirOpcion();
+				}
 				break;
 			case 3:
 				try {
 					agregarTurnoDiario();
 				} catch (TurnoOcupadoException e) {
-					System.out.println("El turno solicitado ya está ocupado");
+					System.out.println("El turno solicitado ya esta ocupado");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -54,7 +56,7 @@ public class InstitutoMedico {
 				break;
 			}
 			System.out.println();
-//			opcion = menu.pedirOpcion(); //GENERA UN ENTER DE MAS
+			// opcion = menu.pedirOpcion(); //GENERA UN ENTER DE MAS
 		}
 		System.out.println("\nFin del programa");
 		input.close();
@@ -64,23 +66,32 @@ public class InstitutoMedico {
 	 * Opciones de Menu
 	 */
 	// OPCION 1
-	public void mostrarTurnosPorEspecialidad() throws NullPointerException, IllegalArgumentException{
-		// esta opción debe controlar una excepción
+	public void mostrarTurnosPorEspecialidad() throws IllegalArgumentException {
+		// esta opcion debe controlar una excepcion
+		EspecialidadEnum especialidad;
+		int indiceEspecialidad;
 		try {
-			EspecialidadEnum especialidad = this.pedirEspecialidad();
-			int indiceEspecialidad = especialidad.ordinal();
+			especialidad = this.pedirEspecialidad();
+			indiceEspecialidad = especialidad.ordinal();
 		} catch (IllegalArgumentException e) {
 			throw e;
 		}
-		Turno[][] agendaDiaria = this.agendaDeHoy.getTurnos(); 
+
+		Turno[][] agendaDiaria = this.agendaDeHoy.getTurnos();
+
 		if (agendaDiaria == null) {
 			throw new NullPointerException();
+		}
+		for (int i = 0; i < agendaDiaria.length; i++) {
+			for (int j = 0; j < agendaDiaria.length; j++) {
+
+			}
 		}
 
 	}
 
 	// OPCION 2
-	public void mostrarTurnosAsignadosPorHora() {
+	public void mostrarTurnosAsignadosPorHora() throws NullPointerException {
 		int cantidadTurnos;
 		Turno[][] agendaDiaria = agendaDeHoy.getTurnos();
 		Turno turno = null;
@@ -103,9 +114,14 @@ public class InstitutoMedico {
 
 	// OPCION 3
 	private void agregarTurnoDiario() throws TurnoOcupadoException, Exception {
-		// implementar
+		
 	}
-
+	private Paciente [] loadPacients(){
+		Paciente [] res = null;
+		res[0] = new PacienteOS("pepe", ObraSocialEnum.values()[1], 20);
+		res[1] = new PacienteParticular("pepe2", 2013131313);
+		return res;
+	}
 	private Paciente crearPaciente() {
 		Paciente paciente;
 		ObraSocialEnum os = pedirObraSocial();
@@ -125,7 +141,7 @@ public class InstitutoMedico {
 
 	// OPCION 4
 	public void reportePorcentajeAsignacion() {
-		System.out.println("Porcentaje de asignación");
+		System.out.println("Porcentaje de asignacion");
 		for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
 			System.out.println(especialidad.toString() + ": " + porcentajeAsignacion(especialidad) + "% de asignacion");
 		}
@@ -154,14 +170,14 @@ public class InstitutoMedico {
 
 		for (int j = horaInicio; j < horaFin; j++) {
 			aux = cantidadAsignados(j);
-			// Completar. Puede haber más de un elemento que cumpla la condición
+			// Completar. Puede haber mï¿½s de un elemento que cumpla la condiciï¿½n
 			// deseada.
 		}
 		if (minimoAsignacion == 0) {
 			System.out.println("Los siguientes horarios no tienen turnos asignados");
 		} else {
 			System.out.println(
-					"Los siguientes horarios tienen el mínimo de turnos asignados (" + minimoAsignacion + ").");
+					"Los siguientes horarios tienen el mï¿½nimo de turnos asignados (" + minimoAsignacion + ").");
 		}
 		for (Integer i : horarios) {
 			System.out.println(i + "hs.");
@@ -199,9 +215,22 @@ public class InstitutoMedico {
 		return value;
 	}
 
-	private ObraSocialEnum pedirObraSocial() throws IllegalArgumentException {
-		// completar
-		return null;
+	public ObraSocialEnum pedirObraSocial() throws IllegalArgumentException {
+		ObraSocialEnum res;
+		String[] obras = new String[ObraSocialEnum.values().length];
+
+		Scanner input = new Scanner(System.in);
+
+		for (int i = 0; i < ObraSocialEnum.values().length; i++) {
+			obras[i] = ObraSocialEnum.values()[i].name();
+		}
+		Menu m = new Menu("Obras Sociales", obras, input);
+		int opcion = m.pedirOpcion();
+		res = ObraSocialEnum.values()[opcion-1];
+		System.out.println(res.name());
+		input.close();
+		
+		return res;
 	}
 
 	private int pedirHoraTurno() {
