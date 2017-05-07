@@ -1,5 +1,6 @@
 package edu.ort.parcial.t3.v2_enCasa;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -40,6 +41,8 @@ public class InstitutoMedico {
 					agregarTurnoDiario();
 				} catch (TurnoOcupadoException e) {
 					System.out.println("El turno solicitado ya esta ocupado");
+				} catch (InvalidParameterException e) {
+						System.out.println("Datos invalidos");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -108,7 +111,7 @@ public class InstitutoMedico {
 	}
 
 	// OPCION 3
-	private void agregarTurnoDiario() throws TurnoOcupadoException, Exception {
+	private void agregarTurnoDiario() throws TurnoOcupadoException, InvalidParameterException, Exception {
 		
 		this.agendaDeHoy.asignarTurno(pedirEspecialidad().ordinal(), pedirHoraTurno(), crearPaciente());
 		
@@ -144,7 +147,7 @@ public class InstitutoMedico {
 
 	// OPCION 4
 	public void reportePorcentajeAsignacion() {
-		System.out.println("Porcentaje de asignaci�n");
+		System.out.println("Porcentaje de asignacion");
 		for (EspecialidadEnum especialidad : EspecialidadEnum.values()) {
 			System.out.println(especialidad.toString() + ": " + porcentajeAsignacion(especialidad) + "% de asignacion");
 		}
@@ -179,7 +182,7 @@ public class InstitutoMedico {
 			System.out.println("Los siguientes horarios no tienen turnos asignados");
 		} else {
 			System.out.println(
-					"Los siguientes horarios tienen el m�nimo de turnos asignados (" + minimoAsignacion + ").");
+					"Los siguientes horarios tienen el minimo de turnos asignados (" + minimoAsignacion + ").");
 		}
 		for (Integer i : horarios) {
 			System.out.println(i + "hs.");

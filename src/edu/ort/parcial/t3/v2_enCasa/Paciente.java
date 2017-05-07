@@ -1,14 +1,21 @@
 package edu.ort.parcial.t3.v2_enCasa;
 
+import java.security.InvalidParameterException;
+
 public abstract class Paciente {
 	private String nombre;
 	private ObraSocialEnum obraSocial;
 	private long nro;
 
 	protected Paciente(String nombre, ObraSocialEnum os, long nro) {
-		this.nombre = nombre;
-		this.obraSocial = os;
-		this.nro = nro;
+		if (nombre !="" && nroValido(nro)) {
+			this.nombre = nombre;
+			this.obraSocial = os;
+			this.nro = nro;
+		}else{
+			throw new InvalidParameterException();
+		}
+		
 	}
 
 	public String getNombre() {
