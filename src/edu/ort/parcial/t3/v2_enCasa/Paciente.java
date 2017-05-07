@@ -5,12 +5,9 @@ public abstract class Paciente {
 	private ObraSocialEnum obraSocial;
 	private long nro;
 
-	public Paciente(String nombre, ObraSocialEnum obraSocial, long nro) throws IllegalArgumentException{
-		if(nombre == "null" || !nroValido(nro)){
-			throw new IllegalArgumentException("Datos de paciente invalidos");
-		}
+	protected Paciente(String nombre, ObraSocialEnum os, long nro) {
 		this.nombre = nombre;
-		this.obraSocial = obraSocial;
+		this.obraSocial = os;
 		this.nro = nro;
 	}
 
@@ -31,4 +28,10 @@ public abstract class Paciente {
 	}
 
 	protected abstract long getValorMinimo();
+
+	@Override
+	public String toString() {
+		return "Paciente [nombre=" + nombre + ", obraSocial=" + obraSocial + ", nro=" + nro + "]";
+	}
+	
 }

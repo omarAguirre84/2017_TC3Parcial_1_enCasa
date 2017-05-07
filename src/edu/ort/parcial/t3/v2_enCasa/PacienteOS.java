@@ -10,9 +10,7 @@ public class PacienteOS extends Paciente {
 
 	@Override
 	protected long getValorMinimo() {
-		// TODO Auto-generated method stub
-		return MIN_NRO_OS;
+		return this.MIN_NRO_OS;
 	}
-	
 	
 }

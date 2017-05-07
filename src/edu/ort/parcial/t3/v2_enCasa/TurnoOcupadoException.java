@@ -7,8 +7,4 @@ public class TurnoOcupadoException extends Exception {
 	 */
 	private static final long serialVersionUID = 7448350836868365096L;
 
-	public TurnoOcupadoException(String msg) {
-		super(msg);
-	}
-	
 }

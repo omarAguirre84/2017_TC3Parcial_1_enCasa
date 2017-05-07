@@ -35,7 +35,7 @@ public class Menu {
 			opcion = 0;
 		}
 		while (opcion < 1 || opcion > opciones.size()) {
-			System.out.println("Error: la opción debe estar entre 1 y " + opciones.size());
+			System.out.println("Error: la opcion debe estar entre 1 y " + opciones.size());
 			try {
 				opcion = Integer.parseInt(input.nextLine());
 			} catch(NumberFormatException nfe) {

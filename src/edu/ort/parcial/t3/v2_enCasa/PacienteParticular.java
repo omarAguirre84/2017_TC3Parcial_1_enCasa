@@ -8,10 +8,10 @@ public class PacienteParticular extends Paciente{
 	public PacienteParticular(String nombre, long nroDNI) throws InvalidParameterException {
 		super(nombre, ObraSocialEnum.PARTICULAR, nroDNI);
 	}
-	
+
 	@Override
 	protected long getValorMinimo() {
-		// TODO Auto-generated method stub
-		return MIN_NRO_DNI;
+		return this.MIN_NRO_DNI;
 	}
+
 }
